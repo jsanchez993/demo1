@@ -25,7 +25,7 @@ const Sidebar = () => {
   };
 
   return (
-    <aside className="w-64 bg-[#782DAF] p-6 flex flex-col">
+    <aside className="w-50 bg-[#782DAF] p-4 flex flex-col">
       <div className="flex-1">
         <button className="w-full flex items-center gap-2 text-white bg-white/10 rounded-lg p-3 hover:bg-white/20 transition-colors">
           <FileText size={20} />
