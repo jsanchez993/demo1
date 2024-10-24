@@ -11,24 +11,24 @@ const StyledWrapper = styled.div`
     display: inline-block;
     padding: 12px 48px;
     color: #fff;
-    background: linear-gradient(to right, #6b21a8 0%, #9b4ccc 50%, #6b21a8 100%); /* Colores púrpura más oscuros */
+    background: linear-gradient(to right, #6b21a8 0%, #9b4ccc 50%, #6b21a8 100%);
     background-position: 0;
     border-radius: 8px;
     text-decoration: none;
-    font-weight: 600; /* Cambiado a 700 para mayor impacto */
-    font-size: 16px; /* Tamaño de fuente más grande */
-    font-family: 'Roboto', sans-serif; /* Fuente más fuerte y moderna */
+    font-weight: 600;
+    font-size: 16px;
+    font-family: 'Roboto', sans-serif;
     text-transform: uppercase;
-    letter-spacing: 1px; /* Espaciado entre letras */
+    letter-spacing: 1px;
     transition: all 0.4s ease-in-out;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 0 18px rgba(107, 33, 168, 0.6); /* Sombra púrpura más visible */
+    box-shadow: 0 0 18px rgba(107, 33, 168, 0.6);
   }
 
   .btn-shine:hover {
     color: #fff;
-    box-shadow: 0 0 25px rgba(107, 33, 168, 0.8); /* Sombra más pronunciada al hover */
+    box-shadow: 0 0 25px rgba(107, 33, 168, 0.8);
     background-position: 200%;
   }
 
@@ -59,6 +59,11 @@ const Sidebar = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
+  // Función para redirigir a la página de transcripción
+  const handleTranscriptionClick = () => {
+    navigate('/transcription');  // Redirige a la página de transcripción
+  };
+
   const handleLogout = async () => {
     try {
       const token = localStorage.getItem('token');
@@ -88,14 +93,18 @@ const Sidebar = () => {
         </div>
       </div>
 
+      {/* Botón para redirigir a la página de transcripción */}
       <div className="flex-1">
-        <button className="w-full flex items-center gap-2 text-white bg-white/10 rounded-lg p-3 hover:bg-white/20 transition-colors">
+        <button 
+          className="w-full flex items-center gap-2 text-white bg-white/10 rounded-lg p-3 hover:bg-white/20 transition-colors"
+          onClick={handleTranscriptionClick}  // Redirigir a la transcripción
+        >
           <FileText size={20} />
           <span>Transcription</span>
         </button>
       </div>
 
-      {/* Botón de logout con efecto shine modificado */}
+      {/* Botón de logout con efecto shine */}
       <StyledWrapper>
         <a href="#" className="btn-shine" onClick={handleLogout}>
           Logout
