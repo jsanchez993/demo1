@@ -1,8 +1,12 @@
 import styled from "styled-components";
 
-const Loader = () => {
+interface LoaderProps {
+  sidebarWidth?: string;
+}
+
+const Loader = ({ sidebarWidth = "240px" }: LoaderProps) => {
   return (
-    <StyledWrapper>
+    <StyledWrapper $sidebarWidth={sidebarWidth}>
       <div
         aria-label="Orange and tan hamster running in a metal wheel"
         role="img"
@@ -29,17 +33,17 @@ const Loader = () => {
   );
 };
 
-const StyledWrapper = styled.div`
+const StyledWrapper = styled.div<{ $sidebarWidth: string }>`
   display: flex;
   justify-content: center;
   align-items: center;
   position: fixed;
   top: 0;
-  left: 0;
-  width: 100vw;
+  left: ${props => props.$sidebarWidth};
+  width: calc(100vw - ${props => props.$sidebarWidth});
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
-  z-index: 9999; /* Asegura que el loader esté por encima de todo */
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
   
   .wheel-and-hamster {
     --dur: 1s;
@@ -224,7 +228,6 @@ const StyledWrapper = styled.div`
       ) 50% 50% / 99% 99% no-repeat;
   }
 
-  /* Animations */
   @keyframes hamster {
     from,
     to {
