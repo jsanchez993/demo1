@@ -1,0 +1,23 @@
+services:
+  dash:
+    build: .
+    ports:
+      - '5174:5173'
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - dash_data:/app/data   # Volumen persistente
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    networks:
+      - tools_core_network
+
+# Definición de redes
+networks:
+  tools_core_network:
+    driver: bridge
+
+# Definición de volúmenes
+volumes:
+  dash_data:
+    driver: local

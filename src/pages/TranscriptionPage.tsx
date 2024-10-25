@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import Sidebar from '../components/layout/Sidebar';
 import Loader from '../components/layout/Loader';
 import Upload from '../components/layout/Upload';
 import MinutesDisplay from '../components/MinutesDisplay';
+import { ScrollProgress } from '../components/scroll/ScrollProgress';
 
 const TranscriptionPage = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -12,6 +13,7 @@ const TranscriptionPage = () => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const minutesRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const API_URL = import.meta.env.VITE_API_URL;
 
@@ -19,7 +21,7 @@ const TranscriptionPage = () => {
     if (minutes && minutesRef.current) {
       minutesRef.current.scrollIntoView({
         behavior: 'smooth',
-        block: 'start'
+        block: 'start',
       });
     }
   }, [minutes]);
@@ -46,7 +48,7 @@ const TranscriptionPage = () => {
         {
           headers: {
             'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${token}`,
           },
           onUploadProgress: (progressEvent) => {
             if (progressEvent.total) {
@@ -110,8 +112,21 @@ const TranscriptionPage = () => {
               ref={minutesRef}
               className="w-full transition-all duration-500 ease-in-out"
             >
-              <MinutesDisplay content={minutes} />
+              <div
+                className="h-[650px] overflow-auto px-8 pb-16 pt-16 relative"
+                ref={containerRef}
+              >
+                {/* Barra de progreso en la parte superior del contenedor */}
+                <ScrollProgress
+                  containerRef={containerRef}
+                  className="absolute top-0 left-0 w-full bg-blue-500 h-1"
+                />
+                
+                {/* Contenido de MinutesDisplay */}
+                <MinutesDisplay content={minutes} />
+              </div>
 
+              {/* Botón para reiniciar */}
               <button
                 className="fixed bottom-8 right-8 text-white px-6 py-3 rounded-full hover:bg-purple-800 transition-colors duration-200 shadow-lg flex items-center gap-2 z-10"
                 style={{ backgroundColor: '#6A1B9A' }}
