@@ -113,7 +113,7 @@ const TranscriptionPage = () => {
               className="w-full transition-all duration-500 ease-in-out"
             >
               <div
-                className="h-[650px] overflow-auto px-8 pb-16 pt-16 relative"
+                className="h-[670px] overflow-auto px-8 pb-16 pt-16 relative"
                 ref={containerRef}
               >
                 {/* Barra de progreso en la parte superior del contenedor */}
