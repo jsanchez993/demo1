@@ -65,39 +65,39 @@ const TranscriptionPage = () => {
           Upload your audio or video file for transcription
         </h1>
         <div className="bg-white rounded-lg p-6 shadow-lg flex flex-col items-center justify-center">
-          {/* Componente Upload centrado */}
-          <Upload onFileChange={handleFileChange} />
-
-          {loading ? (
-            <Loader />
-          ) : (
+          {/* Solo mostrar el componente Upload y el botón si no se han mostrado los "minutes" */}
+          {!minutes && (
             <>
+              <Upload onFileChange={handleFileChange} />
+
               {progress > 0 && (
                 <div className="mb-4">
                   <p>Upload progress: {progress}%</p>
                 </div>
               )}
-              {/* Botón Transcribe centrado */}
+
               <button
                 className="bg-purple-700 text-white px-4 py-2 rounded-lg hover:bg-purple-800 mt-6"
                 onClick={handleUpload}
               >
                 Upload and Transcribe
               </button>
-
-              {minutes && (
-                <div className="mt-8 p-4 bg-gray-100 rounded-lg">
-                  <h2 className="text-xl font-semibold mb-2">Transcription Minutes:</h2>
-                  <Markdown>{minutes}</Markdown> {/* Renderiza el contenido de minutes en formato Markdown */}
-                </div>
-              )}
-
-              {error && (
-                <div className="mt-8 p-4 bg-red-100 text-red-800 rounded-lg">
-                  <p>{error}</p>
-                </div>
-              )}
             </>
+          )}
+
+          {loading && <Loader />} {/* Mostrar el loader mientras está en proceso */}
+
+          {minutes && (
+            <div className="mt-8 p-4 bg-gray-100 rounded-lg">
+              <h2 className="text-xl font-semibold mb-2">Transcription Minutes:</h2>
+              <Markdown>{minutes}</Markdown> {/* Renderiza el contenido de minutes en formato Markdown */}
+            </div>
+          )}
+
+          {error && (
+            <div className="mt-8 p-4 bg-red-100 text-red-800 rounded-lg">
+              <p>{error}</p>
+            </div>
           )}
         </div>
       </main>
