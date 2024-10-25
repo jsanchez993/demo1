@@ -57,6 +57,14 @@ const TranscriptionPage = () => {
     }
   };
 
+  const handleReset = () => {
+    // Limpiamos el estado para volver a la vista inicial
+    setFile(null);
+    setProgress(0);
+    setMinutes(null);
+    setError(null);
+  };
+
   return (
     <div className="flex h-screen bg-[#B09AD9]">
       <Sidebar />
@@ -65,33 +73,47 @@ const TranscriptionPage = () => {
           Upload your audio or video file for transcription
         </h1>
         <div className="bg-white rounded-lg p-6 shadow-lg flex flex-col items-center justify-center">
-          {/* Solo mostrar el componente Upload y el botón si no se han mostrado los "minutes" */}
-          {!minutes && (
+          {!minutes ? (
             <>
+              {/* Componente Upload centrado */}
               <Upload onFileChange={handleFileChange} />
 
-              {progress > 0 && (
-                <div className="mb-4">
-                  <p>Upload progress: {progress}%</p>
-                </div>
+              {loading ? (
+                <Loader />
+              ) : (
+                <>
+                  {progress > 0 && (
+                    <div className="mb-4">
+                      <p>Upload progress: {progress}%</p>
+                    </div>
+                  )}
+                  {/* Botón Transcribe centrado */}
+                  <button
+                    className="bg-purple-700 text-white px-4 py-2 rounded-lg hover:bg-purple-800 mt-6"
+                    onClick={handleUpload}
+                  >
+                    Upload and Transcribe
+                  </button>
+                </>
               )}
+            </>
+          ) : (
+            <>
+              {/* Mostrar el contenido de Transcription Minutes */}
+              <div className="mt-8 p-4 bg-gray-100 rounded-lg">
+                <h2 className="text-xl font-semibold mb-2">Transcription Minutes:</h2>
+                <Markdown>{minutes}</Markdown> {/* Renderiza el contenido de minutes en formato Markdown */}
+              </div>
 
+              {/* Botón para volver a la vista inicial con el mismo color del Sidebar */}
               <button
-                className="bg-purple-700 text-white px-4 py-2 rounded-lg hover:bg-purple-800 mt-6"
-                onClick={handleUpload}
+                className="text-white px-4 py-2 rounded-full hover:bg-purple-700 fixed bottom-4 right-4"
+                style={{ backgroundColor: '#6A1B9A' }} // Color igual al Sidebar
+                onClick={handleReset}
               >
-                Upload and Transcribe
+                Start New Transcription
               </button>
             </>
-          )}
-
-          {loading && <Loader />} {/* Mostrar el loader mientras está en proceso */}
-
-          {minutes && (
-            <div className="mt-8 p-4 bg-gray-100 rounded-lg">
-              <h2 className="text-xl font-semibold mb-2">Transcription Minutes:</h2>
-              <Markdown>{minutes}</Markdown> {/* Renderiza el contenido de minutes en formato Markdown */}
-            </div>
           )}
 
           {error && (
