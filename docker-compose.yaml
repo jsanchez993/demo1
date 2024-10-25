@@ -4,17 +4,15 @@ services:
     ports:
       - '5174:5173'
     volumes:
-      - .:/app
-      - /app/node_modules
-      - dash_data:/app/data   # Volumen persistente
+      - dash_data:/app   # Un solo volumen persistente para toda la aplicación
     environment:
       - CHOKIDAR_USEPOLLING=true
     networks:
-      - tools_core_network
+      - tools_dash_network
 
 # Definición de redes
 networks:
-  tools_core_network:
+  tools_dash_network:
     driver: bridge
 
 # Definición de volúmenes
